@@ -25,19 +25,7 @@ class Tests {
         assertTrue(isPrime(53))
         assertFalse(isPrime(1))
         assertFalse(isPrime(9))
-        var count = 0
-        for (n in 2..7919) {
-            if (isPrime(n)) {
-                count++
-            }
-        }
-        assertEquals(1000, count)
-        for (n in 2..1000000) {
-            if (isPrime(n)) {
-                count++
-            }
-        }
-        assertEquals(79498, count)
+
     }
 
     @Test

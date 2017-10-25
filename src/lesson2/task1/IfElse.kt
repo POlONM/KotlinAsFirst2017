@@ -33,11 +33,16 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * Мой возраст. Для заданного 0 < n < 200, рассматриваемого как возраст человека,
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
-fun ageDescription(age: Int): String {
-    if (age % 10 == 1 && age % 100 != 11) return "$age год"
-     else if ((age % 10 == 2 && age != 12) || (age % 10 == 3 && age != 13) || (age % 10 == 4 && age % 10 != 14)) return "$age года"
-      else  (age % 10 == 5 || age % 10 == 6 || age % 10  == 7 || age % 10 == 8 || age % 10 == 9 || age % 10 == 0 || age % 100 == 11 || age == 12 || age == 13 || age == 14); return "$age лет"
-  }
+fun ageDescription(age: Int) =
+     when  {
+       age in 5..20 -> "$age лет"
+        age % 10 in 5..9 -> "$age лет"
+         age % 10 in 2..4 -> "$age года"
+          age % 10 == 1 -> "$age год"
+           age % 10 == 0 -> "$age лет"
+            else -> "несуществующий возраст $age"
+    }
+
 
 /**
  * Простая
@@ -48,7 +53,12 @@ fun ageDescription(age: Int): String {
  */
 fun timeForHalfWay(t1: Double, v1: Double,
                    t2: Double, v2: Double,
-                   t3: Double, v3: Double): Double = TODO()
+                   t3: Double, v3: Double): Double {
+    val  hw = (v1 * t1 + v2 * t2 + v3 * t3) / 2
+       if (hw <= v1 * t1) return (hw / v1)
+         else if (hw <= v2 * t2) return ((hw - v1 * t1) / v2) + t1
+           else (hw <= v3 * t3); return ((hw - (v1 * t1 - v2 * t2)) / v3) + t1 + t2
+}
 
 /**
  * Простая
@@ -96,14 +106,13 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
  * Если такой треугольник не существует, вернуть -1.
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int {
-    val sumSqr = (c*c) + (b*b)
-     if (a + b > c  && a + c > b && b + c > a) {
-         if (a * a < sumSqr) return 0
-           else if (a * a == sumSqr) return 1
-               else return 2
-
-     }
-     else return -1
+        val sumSqr = (c*c) + (b*b)
+        if (a + b > c  && a + c > b && b + c > a) {
+            if (a * a < sumSqr) return 0
+            else if (a * a == sumSqr) return 1
+            else return 2
+    }
+    else return -1
 }
 
 /**
