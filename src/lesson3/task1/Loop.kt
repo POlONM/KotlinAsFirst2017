@@ -1,6 +1,7 @@
 @file:Suppress("UNUSED_PARAMETER")
 package lesson3.task1
 
+import java.lang.Math.abs
 import java.lang.Math.sqrt
 
 /**
@@ -64,7 +65,7 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  */
 fun digitNumber(n: Int): Int {
     var count = 0
-    var num = n
+    var num = abs(n)
      if (num == 0) return 1
         while (num > 0) {
            num /= 10
@@ -146,7 +147,7 @@ fun maxDivisor(n: Int): Int {
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
 fun isCoPrime(m: Int, n: Int): Boolean {
-    for (del in 2..(m*n) / 2) {
+    for (del in 2..(m+n) / 2) {
         if (m % del == 0 && n % del == 0) return false
     }
     return true
@@ -217,8 +218,7 @@ fun revert(n: Int): Int {
 fun isPalindrome(n: Int): Boolean {
     val paldNum = n
     val reverPaldNum = revert(n)
-     if (paldNum == reverPaldNum) return true
-     else return false
+     return (paldNum == reverPaldNum)
 }
 
 /**
@@ -251,7 +251,7 @@ fun squareSequenceDigit(n: Int): Int {
     var sqrNum = 0
      while (count < n) {
          num++
-         count = count + digitNumber(num * num)
+         count += digitNumber(num * num)
      }
       sqrNum = num * num
      for (num in n until count){
@@ -273,7 +273,7 @@ fun fibSequenceDigit(n: Int): Int {
     var fibNum = 0
     while (count < n) {
         num++
-        count = count + digitNumber(fib(num))
+        count += digitNumber(fib(num))
     }
     fibNum = fib(num)
     for (num in n until count){

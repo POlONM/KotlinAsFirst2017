@@ -1,4 +1,5 @@
 @file:Suppress("UNUSED_PARAMETER")
+
 package lesson2.task2
 
 import lesson1.task1.sqr
@@ -21,9 +22,7 @@ fun pointInsideCircle(x: Double, y: Double, x0: Double, y0: Double, r: Double) =
 fun isNumberHappy(number: Int): Boolean {
     val numNeed1 = number % 1000
     val numNeed2 = numNeed1 % 100
-    if (number / 1000 + numNeed1 / 100 == numNeed2 / 10 + numNeed2 % 10) return true
-      else return false
-
+    return (number / 1000 + numNeed1 / 100 == numNeed2 / 10 + numNeed2 % 10)
 }
 
 /**
@@ -34,8 +33,7 @@ fun isNumberHappy(number: Int): Boolean {
  * Считать, что ферзи не могут загораживать друг друга.
  */
 fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
-    if (x1 == x2 || y1 == y2 || (x1 == y2 && x2 == y1)) return true
-      else return false
+    return (x1 == x2 || y1 == y2 || (x1 == y2 && x2 == y1))
 }
 
 /**
@@ -47,13 +45,11 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
  */
 fun circleInside(x1: Double, y1: Double, r1: Double,
                  x2: Double, y2: Double, r2: Double): Boolean {
-         val coordLength = sqrt(sqr(x1 - x2) + sqr(y1 - y2))
-         if (sqr(x1 - x2) + sqr(y1 - y2) <= sqr(r2)) {
-             if (x1 == x2 && y1 == y2 && r1 <= r2) return true
-               else if (coordLength + r1 <= r2) return true
-                  else return false
-         }
-           else return false
+    val coordLength = sqrt(sqr(x1 - x2) + sqr(y1 - y2))
+    return if (sqr(x1 - x2) + sqr(y1 - y2) <= sqr(r2)) {
+        (x1 == x2 && y1 == y2 && r1 <= r2)
+        (coordLength + r1 <= r2)
+    } else return false
 }
 
 /**
@@ -66,6 +62,5 @@ fun circleInside(x1: Double, y1: Double, r1: Double,
  * Вернуть true, если кирпич пройдёт
  */
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
-    if (a <= s && c <= r || b <= s && a <= r || b <= s && c <= r) return true
-      else return false
+    return (a <= s && c <= r || b <= s && a <= r || b <= s && c <= r)
 }

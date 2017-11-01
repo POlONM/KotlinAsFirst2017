@@ -240,18 +240,12 @@ fun factorizeToString(n: Int): String {
  */
 fun convert(n: Int, base: Int): List<Int> {
     var num = n
-    var t = 0
-    var list = mutableListOf<Int>()
+    val list = mutableListOf<Int>()
       while (num > 0) {
           list.add(num % base)
           num /= base
       }
-    for (i in list.size until 0){
-        t = list[i]
-        list[i] = list[list.size - 1]
-        list[list.size - 1] = t
-    }
-    return list
+    return list.reversed()
 }
 
 /**
@@ -307,4 +301,62 @@ fun roman(n: Int): String = TODO()
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String = TODO()
+fun russian(n: Int): String {
+    val n1 = n / 1000
+    val n2 = n - n1 * 1000
+    var num1 = 0
+    var num2 = 0
+    var num3 = 0
+    val numToStr = mutableListOf<String>()
+    val list1 = mutableListOf<Int>()
+    val list2 = mutableListOf<Int>()
+    val part1 = listOf<String>("одна","две", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять")
+    val thNHun1 = listOf<String>("десять", "двадцать", "тридцать", "сорок", "пятьдесят",
+            "шестьдесят", "семьдесят", "восемдесят", "девяносто")
+    val thNHun2 = listOf<String>("сто", "двести", "триста", "четыреста",
+            "пятьсот", "шестьсот", "семьсот", "восемьсот", "девятьсот")
+    val part2 = listOf<String>("один", "два", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять")
+    val thNHun3 = listOf<String>("десять", "одиннадцать", "двенадцать", "тринадцать", "четырнадцать", "пятнадцать",
+            "шестнадцать", "семнадцать", "восемнадцать", "девятнадцать")
+    val th = listOf("тысяч", "тысячи", "тысяча", "тысяч")
+    if (n > 999) {
+        num3 = n1 / 100
+        num2 = n1 % 100
+        num1 = n1 % 10
+        if (num3 > 0) numToStr.add(thNHun2[num3 - 1])
+        if (num2 > 9 && num2 < 20 ) numToStr.add(thNHun3[num1])
+          else{
+            if (num2 > 19 && num2 % 10 != 0) numToStr.add(thNHun1[(num2 / 10) - 1])
+            if (num1 > 0)numToStr.add(part1[num1 - 1])
+        }
+         when {
+             num1 == 1 -> numToStr.add(th[2])
+             num1 == 0 -> numToStr.add(th[0])
+             num1 > 1 && num1 < 5 -> numToStr.add(th[1])
+             num1 > 4 && num1 < 10 -> numToStr.add(th[3])
+         }
+        num3 = n2 / 100
+        num2 = n2 % 100
+        num1 = n2 % 10
+        if (num3 > 0) numToStr.add(thNHun2[num3 - 1])
+        if (num2 > 9 && num2 < 20 ) numToStr.add(thNHun3[num1])
+        else{
+          if (num2 > 19 && num2 % 10 != 0)  numToStr.add(thNHun1[(num2 / 10) - 1])
+            if (num1 > 0)numToStr.add(part2[num1 - 1])
+        }
+
+    }
+    else {
+        num3 = n2 / 100
+        num2 = n2 % 100
+        num1 = n2 % 10
+        if (num3 > 0) numToStr.add(thNHun2[num3 - 1])
+        if (num2 > 9 && num2 < 20 ) numToStr.add(thNHun3[num1])
+        else{
+            if (num2 > 19 && num2 % 10 != 0) numToStr.add(thNHun1[(num2 / 10) - 1])
+            if (num1 > 0)numToStr.add(part2[num1 - 1])
+        }
+
+    }
+    return numToStr.filter { it != " " }.joinToString( separator = " " )
+}
