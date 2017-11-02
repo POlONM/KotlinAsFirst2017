@@ -321,10 +321,11 @@ fun russian(n: Int): String {
             if (num1 > 0) numToStr.add(part1[num1 - 1])
         }
         when {
-            num1 == 1 -> numToStr.add(th[2])
-            num1 == 0 -> numToStr.add(th[0])
-            num1 > 1 && num1 < 5 -> numToStr.add(th[1])
-            num1 > 4 && num1 < 10 -> numToStr.add(th[3])
+            num2 > 9 && num2 < 19 -> numToStr.add(th[0])
+            num2 % 10 == 1 -> numToStr.add(th[2])
+            num2 % 10 == 0 -> numToStr.add(th[0])
+            num2 % 10 > 1 && num2 % 10 < 5 -> numToStr.add(th[1])
+            num2 % 10 > 4 && num2 % 10 < 10 -> numToStr.add(th[3])
         }
         num3 = n2 / 100
         num2 = n2 % 100
