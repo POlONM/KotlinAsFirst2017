@@ -85,7 +85,7 @@ fun fib(n: Int): Int {
     var  num = 0
     var  count = 1
       while (count < n) {
-        var t = fib
+        val t = fib
         fib += num
           num = t
         count++
@@ -100,13 +100,15 @@ fun fib(n: Int): Int {
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int {
-    var k = 1
-    while (k > 0) {
-        if (k % m == 0 && k % n == 0) break
-        else
-           k++
+    var numM = m
+    var numN = n
+    while (numM != numN) {
+        when {
+            numM > numN -> numM -= numN
+            else -> numN -= numM
+        }
     }
-    return k
+    return (m*n)/numM
 }
 
 /**
@@ -160,19 +162,7 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  * то есть, существует ли такое целое k, что m <= k*k <= n.
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
-fun squareBetweenExists(m: Int, n: Int): Boolean {
-    var k = 0
-    for (sqr in m..n)  {
-        do {
-            k++
-            if (sqr == k * k) break
-            else continue
-        } while (k < m / 2)
-        return false
-    }
-    return true
-}
-
+fun squareBetweenExists(m: Int, n: Int): Boolean = TODO()
 /**
  * Средняя
  *

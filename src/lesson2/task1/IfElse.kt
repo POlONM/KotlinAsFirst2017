@@ -3,6 +3,8 @@
 package lesson2.task1
 
 import lesson1.task1.discriminant
+import lesson4.task1.abs
+import java.lang.Math.abs
 
 /**
  * Пример
@@ -36,7 +38,7 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  */
 fun ageDescription(age: Int) =
         when {
-            age in 5..20 -> "$age лет"
+            age % 100 in 5..20 -> "$age лет"
             age % 10 in 5..9 -> "$age лет"
             age % 10 in 2..4 -> "$age года"
             age == 11 || age == 111 -> "$age лет"
@@ -97,10 +99,10 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
                           rookX: Int, rookY: Int,
                           bishopX: Int, bishopY: Int): Int =
         when {
-            kingX == rookX && kingY - kingX == bishopY - bishopX -> 3
-            kingY == rookY && kingY - kingX == bishopY - bishopX -> 3
-            kingX == rookX || kingY == rookY -> 1
-            kingX + kingY == bishopX + bishopY -> 2
+            kingX == rookX && abs(kingY - bishopY) == abs(kingX - bishopX) -> 3
+            kingY == rookY && abs(kingY - bishopY) == abs(kingX - bishopX) -> 3
+            (kingX != rookX || kingY != rookY) && abs(kingY - bishopY) == abs(kingX - bishopX) -> 2
+            kingX == rookX || kingY == rookY && abs(kingY - bishopY) != abs(kingX - bishopX) -> 1
             else -> 0
         }
 
