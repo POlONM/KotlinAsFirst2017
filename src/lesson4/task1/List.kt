@@ -188,17 +188,7 @@ fun polynom(p: List<Double>, x: Double): Double {
  *
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
-fun accumulate(list: MutableList<Double>): MutableList<Double> {
-    if (list.isNotEmpty()) {
-        for ((index) in list.withIndex()) {
-            for (i in 1 until list.size){
-                list[index] = list[i - 1] + list[i]
-            }
-        }
-        return list
-    }
-    else return mutableListOf()
-}
+fun accumulate(list: MutableList<Double>): MutableList<Double> = TODO()
 
 /**
  * Средняя
@@ -241,6 +231,7 @@ fun factorizeToString(n: Int): String {
 fun convert(n: Int, base: Int): List<Int> {
     var num = n
     val list = mutableListOf<Int>()
+    if (n == 0) return list
       while (num > 0) {
           list.add(num % base)
           num /= base
@@ -312,7 +303,7 @@ fun russian(n: Int): String {
     val list2 = mutableListOf<Int>()
     val part1 = listOf<String>("одна","две", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять")
     val thNHun1 = listOf<String>("десять", "двадцать", "тридцать", "сорок", "пятьдесят",
-            "шестьдесят", "семьдесят", "восемдесят", "девяносто")
+            "шестьдесят", "семьдесят", "восемьдесят", "девяносто")
     val thNHun2 = listOf<String>("сто", "двести", "триста", "четыреста",
             "пятьсот", "шестьсот", "семьсот", "восемьсот", "девятьсот")
     val part2 = listOf<String>("один", "два", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять")
