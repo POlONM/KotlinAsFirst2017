@@ -1,4 +1,5 @@
 @file:Suppress("UNUSED_PARAMETER")
+
 package lesson3.task1
 
 import java.lang.Math.abs
@@ -37,7 +38,7 @@ fun isPrime(n: Int): Boolean {
  */
 fun isPerfect(n: Int): Boolean {
     var sum = 1
-    for (m in 2..n/2) {
+    for (m in 2..n / 2) {
         if (n % m > 0) continue
         sum += m
         if (sum > n) break
@@ -66,11 +67,11 @@ fun digitCountInNumber(n: Int, m: Int): Int =
 fun digitNumber(n: Int): Int {
     var count = 0
     var num = abs(n)
-     if (num == 0) return 1
-        while (num > 0) {
-           num /= 10
-            count++
-        }
+    if (num == 0) return 1
+    while (num > 0) {
+        num /= 10
+        count++
+    }
     return count
 }
 
@@ -81,14 +82,12 @@ fun digitNumber(n: Int): Int {
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
 fun fib(n: Int): Int {
-    var  fib = 1
-    var  num = 0
-    var  count = 1
-      while (count < n) {
-        val t = fib
+    var fib = 1
+    var num = 0
+    for (count in 1 until n) {
+        var t = fib
         fib += num
-          num = t
-        count++
+        num = t
     }
     return fib
 }
@@ -108,7 +107,7 @@ fun lcm(m: Int, n: Int): Int {
             else -> numN -= numM
         }
     }
-    return (m*n)/numM
+    return (m / numM) * n
 }
 
 /**
@@ -117,14 +116,23 @@ fun lcm(m: Int, n: Int): Int {
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-        var minDel = 2
-        while (minDel >= 2) {
+    var minDel = 0
+    if (n % 2 == 0) {
+        minDel = 0
+        for (count in 2..n step 2) {
+            minDel += 2
             if (n % minDel == 0) break
-            else
-                minDel++
         }
-        return minDel
+    } else {
+        minDel = 1
+        for (count in 3..n step 2) {
+            minDel += 2
+            if (n % minDel == 0) break
+        }
+    }
+    return minDel
 }
+
 
 /**
  * Простая
@@ -132,11 +140,17 @@ fun minDivisor(n: Int): Int {
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
 fun maxDivisor(n: Int): Int {
-    var maxDel = n - 1
-    while (maxDel <= n) {
-        if (n % maxDel == 0) break
-        else
-            maxDel = maxDel - 1
+    var maxDel = n
+    if (n % 2 == 0) {
+        for (count in n downTo 1) {
+            maxDel -= 1
+            if (n % maxDel == 0) break
+        }
+    } else {
+        for (count in n downTo 1) {
+            maxDel -= 2
+            if (n % maxDel == 0) break
+        }
     }
     return maxDel
 }
@@ -148,12 +162,8 @@ fun maxDivisor(n: Int): Int {
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean {
-    for (del in 2..(m+n) / 2) {
-        if (m % del == 0 && n % del == 0) return false
-    }
-    return true
-}
+fun isCoPrime(m: Int, n: Int): Boolean = lcm(m, n) == m * n
+
 
 /**
  * Простая
@@ -163,6 +173,7 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
 fun squareBetweenExists(m: Int, n: Int): Boolean = TODO()
+
 /**
  * Средняя
  *
@@ -190,11 +201,11 @@ fun cos(x: Double, eps: Double): Double = TODO()
 fun revert(n: Int): Int {
     var reverNum = 0
     var num = n
-      while (num > 0){
-          reverNum = reverNum * 10
-          reverNum = reverNum + num % 10
-          num /= 10
-      }
+    while (num > 0) {
+        reverNum = reverNum * 10
+        reverNum = reverNum + num % 10
+        num /= 10
+    }
     return reverNum
 }
 
@@ -205,11 +216,8 @@ fun revert(n: Int): Int {
  * первая цифра равна последней, вторая -- предпоследней и так далее.
  * 15751 -- палиндром, 3653 -- нет.
  */
-fun isPalindrome(n: Int): Boolean {
-    val paldNum = n
-    val reverPaldNum = revert(n)
-     return (paldNum == reverPaldNum)
-}
+fun isPalindrome(n: Int): Boolean = (n == revert(n))
+
 
 /**
  * Средняя
@@ -239,14 +247,14 @@ fun squareSequenceDigit(n: Int): Int {
     var count = 0
     var num = 0
     var sqrNum = 0
-     while (count < n) {
-         num++
-         count += digitNumber(num * num)
-     }
-      sqrNum = num * num
-     for (num in n until count){
-         sqrNum = sqrNum / 10
-     }
+    while (count < n) {
+        num++
+        count += digitNumber(num * num)
+    }
+    sqrNum = num * num
+    for (num in n until count) {
+        sqrNum = sqrNum / 10
+    }
     return sqrNum % 10
 }
 
@@ -266,7 +274,7 @@ fun fibSequenceDigit(n: Int): Int {
         count += digitNumber(fib(num))
     }
     fibNum = fib(num)
-    for (num in n until count){
+    for (num in n until count) {
         fibNum = fibNum / 10
     }
     return fibNum % 10

@@ -33,9 +33,9 @@ fun isNumberHappy(number: Int): Boolean {
  * Определить, угрожают ли они друг другу. Вернуть true, если угрожают.
  * Считать, что ферзи не могут загораживать друг друга.
  */
-fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
-    return (x1 == x2 || y1 == y2 || abs(x1 - x2) == abs(y1 - y2))
-}
+fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean =
+        (x1 == x2 || y1 == y2 || abs(x1 - x2) == abs(y1 - y2))
+
 
 /**
  * Средняя
@@ -47,10 +47,7 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
 fun circleInside(x1: Double, y1: Double, r1: Double,
                  x2: Double, y2: Double, r2: Double): Boolean {
     val coordLength = sqrt(sqr(x1 - x2) + sqr(y1 - y2))
-    return if (sqr(x1 - x2) + sqr(y1 - y2) <= sqr(r2)) {
-        (x1 == x2 && y1 == y2 && r1 <= r2)
-        (coordLength + r1 <= r2)
-    } else return false
+    return (sqr(x1 - x2) + sqr(y1 - y2) <= sqr(r2) && (coordLength + r1 <= r2))
 }
 
 /**
@@ -63,10 +60,35 @@ fun circleInside(x1: Double, y1: Double, r1: Double,
  * Вернуть true, если кирпич пройдёт
  */
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
-    return when {
-        (a <= s && c <= r)||(a <= s && b <= r) -> true
-        (b <= s && a <= r)||(b <= s && c <= r) -> true
-        (c <= s && a <= r)||(c <= s && b <= r) -> true
-        else -> false
+    var num1 = 0
+    var num2 = 0
+    var side1 = 0
+    var side2 = 0
+    when {
+        a == maxOf(a, b, c) -> {
+            num1 = b
+            num2 = c
+        }
+        b == maxOf(a, b, c) -> {
+            num1 = a
+            num2 = c
+        }
+        c == maxOf(a, b, c) -> {
+            num1 = a
+            num2 = b
+        }
     }
+    when {
+        r >= s -> {
+            side1 = r
+            side2 = s
+        }
+        r <= s -> {
+            side1 = s
+            side2 = r
+        }
+    }
+    return if (num1 > num2) {
+        (num1 <= side1) && (num2 <= side2)
+    } else (num2 <= side1) && (num1 <= side2)
 }

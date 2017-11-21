@@ -216,10 +216,8 @@ fun factorize(n: Int): List<Int> {
  * Разложить заданное натуральное число n > 1 на простые множители.
  * Результат разложения вернуть в виде строки, например 75 -> 3*5*5
  */
-fun factorizeToString(n: Int): String {
-    val list = factorize(n)
-    return list.joinToString(separator = "*")
-}
+fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*")
+
 
 /**
  * Средняя
@@ -248,7 +246,6 @@ fun convert(n: Int, base: Int): List<Int> {
  * Например: n = 100, base = 4 -> 1210, n = 250, base = 14 -> 13c
  */
 fun convertToString(n: Int, base: Int): String = TODO()
-
 
 
 /**
@@ -288,6 +285,30 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
 fun roman(n: Int): String = TODO()
 
 /**
+ * For Impossible "russian"
+ */
+fun forRussian(number: Int, num1: Int, num2: Int, list1: List<String>, list2: List<String>,
+               list3: List<String>, list4: List<String>, list5: List<String>): MutableList<String> {
+    val list = mutableListOf<String>()
+    if (number > 999) {
+        if ((num1 / 100) > 0) list.add(list1[(num1 / 100) - 1])
+        if (num1 % 100 > 9 && num1 % 100 < 20) list.add(list2[(num1 % 100) % 10])
+        else {
+            if (num1 % 100 > 19 && (num1 % 100) / 10 != 0) list.add(list3[((num1 % 100) / 10) - 1])
+            if (num1 % 10 > 0) list.add(list4[(num1 % 10) - 1])
+        }
+    } else {
+        if ((num2 / 100) > 0) list.add(list1[(num2 / 100) - 1])
+        if (num2 % 100 > 9 && num2 % 100 < 20) list.add(list2[(num2 % 100) % 10])
+        else {
+            if (num2 % 100 > 19 && (num2 % 100) / 10 != 0) list.add(list3[((num2 % 100) / 10) - 1])
+            if (num2 % 10 > 0) list.add(list5[(num2 % 10) - 1])
+        }
+    }
+    return list
+}
+
+/**
  * Очень сложная
  *
  * Записать заданное натуральное число 1..999999 прописью по-русски.
@@ -295,11 +316,8 @@ fun roman(n: Int): String = TODO()
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
 fun russian(n: Int): String {
-    val n1 = n / 1000
-    val n2 = n - n1 * 1000
-    var num1 = 0
-    var num2 = 0
-    var num3 = 0
+    val num1 = n / 1000
+    val num2 = n - num1 * 1000
     val numToStr = mutableListOf<String>()
     val part1 = listOf<String>("одна", "две", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять")
     val thNHun1 = listOf<String>("десять", "двадцать", "тридцать", "сорок", "пятьдесят",
@@ -311,43 +329,20 @@ fun russian(n: Int): String {
             "шестнадцать", "семнадцать", "восемнадцать", "девятнадцать")
     val th = listOf("тысяч", "тысячи", "тысяча", "тысяч")
     if (n > 999) {
-        num3 = n1 / 100
-        num2 = n1 % 100
-        num1 = n1 % 10
-        if (num3 > 0) numToStr.add(thNHun2[num3 - 1])
-        if (num2 > 9 && num2 < 20) numToStr.add(thNHun3[num1])
-        else {
-            if (num2 > 19 && num2 / 10 != 0) numToStr.add(thNHun1[(num2 / 10) - 1])
-            if (num1 > 0) numToStr.add(part1[num1 - 1])
-        }
+        var num = (n / 1000) % 100
+        numToStr += forRussian(n, num1, num2, thNHun2, thNHun3, thNHun1, part1, part2)
         when {
-            num2 > 9 && num2 < 19 -> numToStr.add(th[0])
-            num2 % 10 == 1 -> numToStr.add(th[2])
-            num2 % 10 == 0 -> numToStr.add(th[0])
-            num2 % 10 > 1 && num2 % 10 < 5 -> numToStr.add(th[1])
-            num2 % 10 > 4 && num2 % 10 < 10 -> numToStr.add(th[3])
+            num > 9 && num < 19 -> numToStr.add(th[0])
+            num % 10 == 1 -> numToStr.add(th[2])
+            num % 10 == 0 -> numToStr.add(th[0])
+            num % 10 > 1 && num % 10 < 5 -> numToStr.add(th[1])
+            num % 10 > 4 && num % 10 < 10 -> numToStr.add(th[3])
         }
-        num3 = n2 / 100
-        num2 = n2 % 100
-        num1 = n2 % 10
-        if (num3 > 0) numToStr.add(thNHun2[num3 - 1])
-        if (num2 > 9 && num2 < 20) numToStr.add(thNHun3[num1])
-        else {
-            if (num2 > 19 && num2 / 10 != 0) numToStr.add(thNHun1[(num2 / 10) - 1])
-            if (num1 > 0) numToStr.add(part2[num1 - 1])
-        }
-
+        val number = n - num1 * 1000
+        numToStr += forRussian(number, num1, num2, thNHun2, thNHun3, thNHun1, part1, part2)
     } else {
-        num3 = n2 / 100
-        num2 = n2 % 100
-        num1 = n2 % 10
-        if (num3 > 0) numToStr.add(thNHun2[num3 - 1])
-        if (num2 > 9 && num2 < 20) numToStr.add(thNHun3[num1])
-        else {
-            if (num2 > 19 && num2 / 10 != 0) numToStr.add(thNHun1[(num2 / 10) - 1])
-            if (num1 > 0) numToStr.add(part2[num1 - 1])
-        }
-
+        numToStr += forRussian(n, num1, num2, thNHun2, thNHun3, thNHun1, part1, part2)
     }
     return numToStr.filter { it != " " }.joinToString(separator = " ")
 }
+
