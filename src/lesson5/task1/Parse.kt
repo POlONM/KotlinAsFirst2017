@@ -91,7 +91,7 @@ fun dateStrToDigit(str: String): String {
             return ""
         }
     }
-    return String.format("%02d.%02d.%02d", days, month, year)
+    return String.format("%02d.%02d.%01d", days, month, year)
 }
 
 /**
@@ -116,7 +116,7 @@ fun dateDigitToStr(digital: String): String {
             when {
                 i == 0 && parts[0].toInt() > 0 && parts[0].toInt() < 32 -> list.add((part.toInt()).toString())
                 i == 1 -> list.add(months[(parts[1].toInt()) % 10])
-                i == 2 && parts[2].toInt() > 0 -> list.add(part)
+                i == 2 && parts[2].toInt() >= 0 -> list.add(part)
             }
         } catch (e: Exception) {
             return ""
@@ -169,7 +169,7 @@ fun bestLongJump(jumps: String): Int {
         try {
             if (part.toInt() > max) max = part.toInt()
         } catch (e: Exception) {
-            if (!part.equals("%") && !part.equals("-")) return -1
+            if (!part.equals("%") && !part.equals("-") && !part.equals("")) return -1
         }
     }
     return max
@@ -186,15 +186,15 @@ fun bestLongJump(jumps: String): Int {
  * При нарушении формата входной строки вернуть -1.
  */
 fun bestHighJump(jumps: String): Int {
-    val parts = jumps.split( " ")
+    val parts = jumps.split(" ")
+    parts.filter { it == "" }
     var max = -1
-    var i = -1
-    for (part in parts) {
+    var i = -2
+    for (i in 0 until parts.size step 2) {
         try {
-            if (part[i].toInt() > max && part[i + 1] == '+') max = part[i].toInt()
-            i++
+               if (parts[i].toInt() > max && parts[i + 1] == "+") max = parts[i].toInt()
         } catch (e: Exception) {
-            if (!part.equals("%") && !part.equals("-") && !part.equals("+") && !part.equals("")) return -1
+            return -1
         }
     }
     return max
@@ -233,7 +233,24 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть положительными
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String {
+    val products = description.split(" ", ";")
+    if (products.size < 2) return ""
+    var maxPrice = -1.0
+    var product = mutableListOf<String>()
+    var i = -3
+    for (i in 0 until products.size step 3) {
+        try {
+            if (maxPrice < products[i + 1].toDouble()) {
+                maxPrice = products[i + 1].toDouble()
+                product.add(products[i])
+            }
+        } catch (description: Exception) {
+            return ""
+        }
+    }
+    return product.last()
+}
 
 /**
  * Сложная
