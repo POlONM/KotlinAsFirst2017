@@ -60,24 +60,11 @@ fun circleInside(x1: Double, y1: Double, r1: Double,
  * Вернуть true, если кирпич пройдёт
  */
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
-    var num1 = 0
-    var num2 = 0
+    var num1 = minOf(a, b, c)
+    var max = maxOf(a, b, c)
+    var num2 = (a + b + c) - (max + num1)
     var side1 = 0
     var side2 = 0
-    when {
-        a == maxOf(a, b, c) -> {
-            num1 = b
-            num2 = c
-        }
-        b == maxOf(a, b, c) -> {
-            num1 = a
-            num2 = c
-        }
-        c == maxOf(a, b, c) -> {
-            num1 = a
-            num2 = b
-        }
-    }
     when {
         r >= s -> {
             side1 = r

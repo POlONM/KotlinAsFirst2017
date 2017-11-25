@@ -115,7 +115,7 @@ fun dateDigitToStr(digital: String): String {
             i++
             when {
                 i == 0 && parts[0].toInt() > 0 && parts[0].toInt() < 32 -> list.add((part.toInt()).toString())
-                i == 1 -> list.add(months[(parts[1].toInt()) % 10])
+                i == 1 -> list.add(months[(parts[1].toInt())])
                 i == 2 && parts[2].toInt() >= 0 -> list.add(part)
             }
         } catch (e: Exception) {
@@ -139,7 +139,7 @@ fun dateDigitToStr(digital: String): String {
  */
 fun flattenPhoneNumber(phone: String): String {
     val parts = phone.split(" ", "-", "(", ")", "")
-    val list: MutableList<String> = mutableListOf<String>()
+    val list: MutableList<String> = mutableListOf()
     if ("+" in parts) list.add("+")
     for (part in parts)
         try {
@@ -168,7 +168,7 @@ fun bestLongJump(jumps: String): Int {
     for (part in parts) {
         try {
             if (part.toInt() > max) max = part.toInt()
-        } catch (e: Exception) {
+        } catch (e: IllegalArgumentException) {
             if (!part.equals("%") && !part.equals("-") && !part.equals("")) return -1
         }
     }
@@ -192,8 +192,9 @@ fun bestHighJump(jumps: String): Int {
     var i = -2
     for (i in 0 until parts.size step 2) {
         try {
-               if (parts[i].toInt() > max && parts[i + 1] == "+") max = parts[i].toInt()
-        } catch (e: Exception) {
+            if (parts[i].toInt() > max &&
+                    (parts[i + 1] == "+" || parts[i + 1] == "%+" || parts[i + 1] == "%%+")) max = parts[i].toInt()
+        } catch (e: IllegalArgumentException) {
             return -1
         }
     }
@@ -209,7 +210,23 @@ fun bestHighJump(jumps: String): Int {
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()
+fun plusMinus(expression: String): Int {
+    val parts = expression.split(" ")
+    if (parts[0].toInt() < 0) throw IllegalArgumentException()
+    var sum = parts[0].toInt()
+    for (i in 2 until parts.size step 2) {
+        try {
+            when {
+                parts[i - 1] == "+" -> sum += parts[i].toInt()
+                parts[i - 1] == "-" -> sum -= parts[i].toInt()
+            }
+        }
+        catch (parts: IllegalArgumentException) {
+            throw IllegalArgumentException()
+        }
+    }
+    return sum
+}
 
 /**
  * Сложная
