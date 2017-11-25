@@ -212,8 +212,12 @@ fun bestHighJump(jumps: String): Int {
  */
 fun plusMinus(expression: String): Int {
     val parts = expression.split(" ")
-    if (parts[0].toInt() < 0) throw IllegalArgumentException()
-    var sum = parts[0].toInt()
+    var sum = 0
+    try{
+        sum = parts[0].toInt()
+    } catch (parts: NumberFormatException) {
+        throw IllegalArgumentException()
+    }
     for (i in 2 until parts.size step 2) {
         try {
             when {
@@ -255,7 +259,6 @@ fun mostExpensive(description: String): String {
     if (products.size < 2) return ""
     var maxPrice = -1.0
     var product = mutableListOf<String>()
-    var i = -3
     for (i in 0 until products.size step 3) {
         try {
             if (maxPrice < products[i + 1].toDouble()) {
