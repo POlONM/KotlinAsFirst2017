@@ -189,7 +189,6 @@ fun bestHighJump(jumps: String): Int {
     val parts = jumps.split(" ")
     parts.filter { it == "" }
     var max = -1
-    var i = -2
     for (i in 0 until parts.size step 2) {
         try {
             if (parts[i].toInt() > max &&
