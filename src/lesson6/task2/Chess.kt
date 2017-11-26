@@ -40,6 +40,7 @@ data class Square(val column: Int, val row: Int) {
  */
 fun square(notation: String): Square {
     val symbols = listOf<String>("", "a", "b", "c", "d", "e", "f", "g", "h")
+    if (notation.length != 2) throw IllegalArgumentException()
     val parts = notation.split("")
     if (parts[1] !in symbols || (parts[2].toInt() < 1 || parts[2].toInt() > 8)) throw IllegalArgumentException()
     return Square(symbols.indexOf(parts[1]), parts[2].toInt())
@@ -159,7 +160,29 @@ fun bishopMoveNumber(start: Square, end: Square): Int {
  *          bishopTrajectory(Square(1, 3), Square(6, 8)) = listOf(Square(1, 3), Square(6, 8))
  * Если возможно несколько вариантов самой быстрой траектории, вернуть любой из них.
  */
-fun bishopTrajectory(start: Square, end: Square): List<Square> = TODO()
+fun bishopTrajectory(start: Square, end: Square): List<Square> {
+    val points = mutableListOf(start)
+    val bishopMove = bishopMoveNumber(start, end)
+    when {
+        bishopMove == 0 -> return points
+        bishopMove == 2 -> {
+            var poz1 = (((start.row - start.column) + (end.column + end.row)) / 2)
+            var poz2 = ((((start.row - start.column) + (end.column + end.row)) / 2) - (start.row - start.column))
+            if (!Square(poz1, poz2).inside()){
+                poz1 = (((start.row + start.column) + (end.row - end.column)) / 2)
+                poz2 = ((((start.row + start.column) + (end.row - end.column)) / 2) - (end.row - end.column))
+                points.add(Square(poz2, poz1))
+            }
+            else points.add(Square(poz2, poz1))
+            points.add(Square(end.column, end.row))
+        }
+        bishopMove == 1 -> {
+            points.add(Square(end.column, end.row))
+        }
+        else -> return emptyList()
+    }
+    return points
+}
 
 /**
  * Средняя
