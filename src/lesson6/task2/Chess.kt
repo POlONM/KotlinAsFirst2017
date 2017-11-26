@@ -42,7 +42,7 @@ fun square(notation: String): Square {
     val symbols = listOf<String>("", "a", "b", "c", "d", "e", "f", "g", "h")
     if (notation.length != 2) throw IllegalArgumentException()
     val parts = notation.split("")
-    if (parts[1] !in symbols || (parts[2].toInt() < 1 || parts[2].toInt() > 8)) throw IllegalArgumentException()
+    if (parts[1] !in symbols || parts[2].toInt() !in 1..8) throw IllegalArgumentException()
     return Square(symbols.indexOf(parts[1]), parts[2].toInt())
 }
 
