@@ -257,7 +257,7 @@ fun mostExpensive(description: String): String {
     val products = description.split(" ", ";")
     if (products.size < 2) return ""
     var maxPrice = -1.0
-    var product = mutableListOf<String>()
+    val product = mutableListOf<String>()
     for (i in 0 until products.size step 3) {
         try {
             if (maxPrice < products[i + 1].toDouble()) {
