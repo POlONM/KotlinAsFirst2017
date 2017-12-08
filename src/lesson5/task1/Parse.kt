@@ -76,7 +76,7 @@ fun dateStrToDigit(str: String): String {
     var year = 0
     var i = -1
     val months =
-            listOf<String>("", "января", "февраля", "марта", "апреля", "мая", "июня",
+            listOf("", "января", "февраля", "марта", "апреля", "мая", "июня",
                     "июля", "августа", "сентября", "октября", "ноября", "декабря")
     if (parts[1] !in months) return ""
     for (part in parts) {
@@ -107,7 +107,7 @@ fun dateDigitToStr(digital: String): String {
     val list: MutableList<String> = mutableListOf()
     var i = -1
     val months =
-            listOf<String>("", "января", "февраля", "марта", "апреля", "мая", "июня",
+            listOf("", "января", "февраля", "марта", "апреля", "мая", "июня",
                     "июля", "августа", "сентября", "октября", "ноября", "декабря")
     for (part in parts) {
         try {
@@ -140,14 +140,14 @@ fun dateDigitToStr(digital: String): String {
 fun flattenPhoneNumber(phone: String): String {
     val parts = phone.split(" ", "-", "(", ")", "")
     val list: MutableList<String> = mutableListOf()
-    if ("+" in parts) list.add("+")
     for (part in parts)
         try {
+            if (part == "+") list.add("+")
             if (part.toInt() !is Int) return ""
             list.add(part)
         } catch (e: Exception) {
-            if (!part.equals("+") && !part.equals("-") &&
-                    !part.equals("(") && !part.equals(")") && !part.equals("")) return ""
+            if (part != "+" && part != "-" &&
+                    part != "(" && part != ")" && part != "") return ""
         }
     return list.joinToString(separator = "")
 }
@@ -212,7 +212,7 @@ fun bestHighJump(jumps: String): Int {
 fun plusMinus(expression: String): Int {
     val parts = expression.split(" ")
     var sum = 0
-    try{
+    try {
         sum = parts[0].toInt()
     } catch (parts: NumberFormatException) {
         throw IllegalArgumentException()
@@ -223,8 +223,7 @@ fun plusMinus(expression: String): Int {
                 parts[i - 1] == "+" -> sum += parts[i].toInt()
                 parts[i - 1] == "-" -> sum -= parts[i].toInt()
             }
-        }
-        catch (parts: IllegalArgumentException) {
+        } catch (parts: IllegalArgumentException) {
             throw IllegalArgumentException()
         }
     }
