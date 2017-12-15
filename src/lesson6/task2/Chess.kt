@@ -138,7 +138,7 @@ fun bishopMoveNumber(start: Square, end: Square): Int {
     return when {
         start.column == end.column && start.row == end.row -> 0
         Math.abs(start.column - end.column) == Math.abs(start.row - end.row) -> 1
-        startSum % 2 == 0 && endSum % 2 == 0 || startSum % 2 == 1 && endSum % 2 == 1 -> 2
+        (startSum + endSum) % 2 == 0 -> 2
         else -> -1
     }
 }
