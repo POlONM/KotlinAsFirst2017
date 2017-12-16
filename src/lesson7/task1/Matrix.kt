@@ -56,14 +56,14 @@ class MatrixImpl<E>(override val height: Int, override val width: Int, e: E) : M
 
     override fun get(row: Int, column: Int): E {
         if (row in 0..height && column in 0..width) return tableList[row][column]
-        else throw Exception()
+        else throw IllegalArgumentException()
     }
 
     override fun get(cell: Cell): E = get(cell.row, cell.column)
 
     override fun set(row: Int, column: Int, value: E) {
         if (row in 0..height && column in 0..width) tableList[row][column] = value
-        else throw Exception()
+        else throw IllegalArgumentException()
     }
 
     override fun set(cell: Cell, value: E) = set(cell.row, cell.column, value)

@@ -1,4 +1,5 @@
 @file:Suppress("UNUSED_PARAMETER")
+
 package lesson7.task2
 
 import lesson7.task1.Matrix
@@ -59,7 +60,41 @@ operator fun Matrix<Int>.plus(other: Matrix<Int>): Matrix<Int> {
  * 10 11 12  5
  *  9  8  7  6
  */
-fun generateSpiral(height: Int, width: Int): Matrix<Int> = TODO()
+fun generateSpiral(height: Int, width: Int): Matrix<Int> {
+    val matrix = createMatrix(height, width, 1)
+    var count = 0
+    var heightNum = 0
+    var sizeH = height
+    var widthNum = 0
+    var sizeW = width
+    while (count <= height * width) {
+        for (i in 0 until sizeW) {
+            if (count > height * width)
+                matrix[widthNum, i] = count
+            count++
+        }
+        widthNum++
+        for (j in 1 until sizeH) {
+            if (count > height * width)
+                matrix[heightNum, j] = count
+            count++
+        }
+        sizeW--
+        for (k in sizeW - 1 downTo widthNum) {
+            if (count > height * width)
+                matrix[widthNum, k] = count
+            count++
+        }
+        sizeH--
+        for (l in sizeH - 1 downTo heightNum) {
+            if (count > height * width)
+                matrix[heightNum, l] = count
+            count++
+        }
+        widthNum++
+    }
+    return matrix
+}
 
 /**
  * Сложная
@@ -75,7 +110,43 @@ fun generateSpiral(height: Int, width: Int): Matrix<Int> = TODO()
  *  1  2  2  2  2  1
  *  1  1  1  1  1  1
  */
-fun generateRectangles(height: Int, width: Int): Matrix<Int> = TODO()
+fun generateRectangles(height: Int, width: Int): Matrix<Int> {
+    val matrix = createMatrix(height, width, 1)
+    var num = 1
+    var count = 0
+    var heightNum = 0
+    var sizeH = height
+    var widthNum = 0
+    var sizeW = width
+    while (count <= height * width) {
+        for (i in 0 until sizeW) {
+            if (count > height * width)
+                matrix[widthNum, i] = num
+            count++
+        }
+        widthNum++
+        for (j in 1 until sizeH) {
+            if (count > height * width)
+                matrix[heightNum, j] = num
+            count++
+        }
+        sizeW--
+        for (k in sizeW - 1 downTo widthNum) {
+            if (count > height * width)
+                matrix[widthNum, k] = num
+            count++
+        }
+        sizeH--
+        for (l in sizeH - 1 downTo heightNum) {
+            if (count > height * width)
+                matrix[heightNum, l] = num
+            count++
+        }
+        num++
+        widthNum++
+    }
+    return matrix
+}
 
 /**
  * Сложная
@@ -90,7 +161,44 @@ fun generateRectangles(height: Int, width: Int): Matrix<Int> = TODO()
  * 10 13 16 18
  * 14 17 19 20
  */
-fun generateSnake(height: Int, width: Int): Matrix<Int> = TODO()
+fun generateSnake(height: Int, width: Int): Matrix<Int> {
+    val matrix = createMatrix(height, width, 1)
+    var num = 0
+    var count = 1
+    var sizeH = height
+    var heightNum = 0
+    var sizeW = width
+    var widthNum = 0
+        while (num != width) {
+            for (i in widthNum until sizeW) {
+                for (j in heightNum until sizeH) {
+                    var numI = sizeW
+                    while (numI != 1) {
+                        matrix[heightNum, i] = count
+                        numI--
+                        count++
+                    }
+                }
+            }
+            num++
+        }
+        heightNum++
+        num = 0
+        while (num != height) {
+            for (i in sizeW - 1 downTo widthNum) {
+                for (j in heightNum until sizeH) {
+                    var numJ = heightNum
+                    while (numJ != height) {
+                        matrix[widthNum, i] = count
+                        numJ++
+                        count++
+                    }
+                }
+            }
+            num++
+        }
+    return matrix
+}
 
 /**
  * Средняя
@@ -103,7 +211,7 @@ fun generateSnake(height: Int, width: Int): Matrix<Int> = TODO()
  * 4 5 6      8 5 2
  * 7 8 9      9 6 3
  */
-fun <E> rotate(matrix: Matrix<E>): Matrix<E> = TODO()
+fun <E> rotate(matrix: Matrix<E>): Matrix<E> = transpose(matrix)
 
 /**
  * Сложная
