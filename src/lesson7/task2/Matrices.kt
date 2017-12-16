@@ -169,34 +169,34 @@ fun generateSnake(height: Int, width: Int): Matrix<Int> {
     var heightNum = 0
     var sizeW = width
     var widthNum = 0
-        while (num != width) {
-            for (i in widthNum until sizeW) {
-                for (j in heightNum until sizeH) {
-                    var numI = sizeW
-                    while (numI != 1) {
-                        matrix[heightNum, i] = count
-                        numI--
-                        count++
-                    }
+    while (num != width) {
+        for (i in widthNum until sizeW) {
+            for (j in heightNum until sizeH) {
+                var numI = sizeW
+                while (numI != 1) {
+                    matrix[heightNum, i] = count
+                    numI--
+                    count++
                 }
             }
-            num++
         }
-        heightNum++
-        num = 0
-        while (num != height) {
-            for (i in sizeW - 1 downTo widthNum) {
-                for (j in heightNum until sizeH) {
-                    var numJ = heightNum
-                    while (numJ != height) {
-                        matrix[widthNum, i] = count
-                        numJ++
-                        count++
-                    }
+        num++
+    }
+    heightNum++
+    num = 0
+    while (num != height) {
+        for (i in sizeW - 1 downTo widthNum) {
+            for (j in heightNum until sizeH) {
+                var numJ = heightNum
+                while (numJ != height) {
+                    matrix[widthNum, i] = count
+                    numJ++
+                    count++
                 }
             }
-            num++
         }
+        num++
+    }
     return matrix
 }
 
@@ -211,7 +211,8 @@ fun generateSnake(height: Int, width: Int): Matrix<Int> {
  * 4 5 6      8 5 2
  * 7 8 9      9 6 3
  */
-fun <E> rotate(matrix: Matrix<E>): Matrix<E> = transpose(matrix)
+fun <E> rotate(matrix: Matrix<E>): Matrix<E> = if (matrix.height == matrix.width) transpose(matrix)
+         else throw  IllegalArgumentException()
 
 /**
  * Сложная
