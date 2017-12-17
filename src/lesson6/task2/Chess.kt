@@ -133,7 +133,7 @@ fun rookTrajectory(start: Square, end: Square): List<Square> {
  */
 fun bishopMoveNumber(start: Square, end: Square): Int {
     val startSum = start.column + start.row
-    val endSum  = end.column + end.row
+    val endSum = end.column + end.row
     if (!start.inside() || !end.inside()) throw IllegalArgumentException()
     return when {
         start.column == end.column && start.row == end.row -> 0
@@ -169,12 +169,11 @@ fun bishopTrajectory(start: Square, end: Square): List<Square> {
         bishopMove == 2 -> {
             var poz1 = (((start.row - start.column) + (end.column + end.row)) / 2)
             var poz2 = ((((start.row - start.column) + (end.column + end.row)) / 2) - (start.row - start.column))
-            if (!Square(poz1, poz2).inside()){
+            if (!Square(poz1, poz2).inside()) {
                 poz1 = (((start.row + start.column) + (end.row - end.column)) / 2)
                 poz2 = ((((start.row + start.column) + (end.row - end.column)) / 2) - (end.row - end.column))
                 points.add(Square(poz2, poz1))
-            }
-            else points.add(Square(poz2, poz1))
+            } else points.add(Square(poz2, poz1))
             points.add(Square(end.column, end.row))
         }
         bishopMove == 1 -> {
@@ -205,7 +204,35 @@ fun bishopTrajectory(start: Square, end: Square): List<Square> {
  * Пример: kingMoveNumber(Square(3, 1), Square(6, 3)) = 3.
  * Король может последовательно пройти через клетки (4, 2) и (5, 2) к клетке (6, 3).
  */
-fun kingMoveNumber(start: Square, end: Square): Int = TODO()
+fun kingMoveNumber(start: Square, end: Square): Int {
+    if (!start.inside() || !end.inside()) throw IllegalArgumentException()
+    var points = 0
+    var startCol = start.column
+    var startRow = start.row
+    while (Square(startCol, startRow) != Square(end.column, end.row)) {
+        if (startCol != end.column) {
+            if (startCol < end.column) {
+                points++
+                startCol++
+                if (startRow != end.row) startRow++
+            } else {
+                points++
+                startCol--
+                if (startRow != end.row) startRow--
+            }
+        }
+        if (startCol == end.column && startRow != end.row) {
+            if (startRow < end.row) {
+                points++
+                startRow++
+            } else {
+                points++
+                startRow--
+            }
+        }
+    }
+    return points
+}
 
 /**
  * Сложная
