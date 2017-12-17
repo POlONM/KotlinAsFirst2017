@@ -62,39 +62,41 @@ operator fun Matrix<Int>.plus(other: Matrix<Int>): Matrix<Int> {
  */
 fun generateSpiral(height: Int, width: Int): Matrix<Int> {
     val matrix = createMatrix(height, width, 1)
-    var count = 0
+    var count = 1
     var heightNum = 0
-    var sizeH = height
+    var sizeH = height - 1
     var widthNum = 0
-    var sizeW = width
-    while (count <= height * width) {
-        for (i in 0 until sizeW) {
-            if (count > height * width)
-                matrix[widthNum, i] = count
+    var sizeW = width - 1
+    while (count < height * width) {
+        for (i in widthNum..sizeW) {
+            if (count > height * width) break
+            matrix[heightNum, i] = count
             count++
         }
-        widthNum++
-        for (j in 1 until sizeH) {
-            if (count > height * width)
-                matrix[heightNum, j] = count
+        heightNum++
+        for (i in heightNum..sizeH) {
+            if (count > height * width) break
+            matrix[i, sizeW] = count
             count++
         }
         sizeW--
-        for (k in sizeW - 1 downTo widthNum) {
-            if (count > height * width)
-                matrix[widthNum, k] = count
+        for (i in sizeW downTo widthNum) {
+            if (count > height * width) break
+            matrix[sizeH, i] = count
             count++
         }
         sizeH--
-        for (l in sizeH - 1 downTo heightNum) {
-            if (count > height * width)
-                matrix[heightNum, l] = count
+        for (i in sizeH downTo heightNum) {
+            if (count > height * width) break
+            matrix[i, widthNum] = count
             count++
         }
         widthNum++
     }
+    if ((height == width) && (height % 2 == 1)) matrix[height / 2, width / 2] = height * width
     return matrix
 }
+
 
 /**
  * Сложная
@@ -113,33 +115,33 @@ fun generateSpiral(height: Int, width: Int): Matrix<Int> {
 fun generateRectangles(height: Int, width: Int): Matrix<Int> {
     val matrix = createMatrix(height, width, 1)
     var num = 1
-    var count = 0
+    var count = 1
     var heightNum = 0
-    var sizeH = height
+    var sizeH = height - 1
     var widthNum = 0
-    var sizeW = width
-    while (count <= height * width) {
-        for (i in 0 until sizeW) {
-            if (count > height * width)
-                matrix[widthNum, i] = num
+    var sizeW = width - 1
+    while (count < height * width) {
+        for (i in widthNum..sizeW) {
+            if (count > height * width) break
+            matrix[heightNum, i] = num
             count++
         }
-        widthNum++
-        for (j in 1 until sizeH) {
-            if (count > height * width)
-                matrix[heightNum, j] = num
+        heightNum++
+        for (i in heightNum..sizeH) {
+            if (count > height * width) break
+            matrix[i, sizeW] = num
             count++
         }
         sizeW--
-        for (k in sizeW - 1 downTo widthNum) {
-            if (count > height * width)
-                matrix[widthNum, k] = num
+        for (i in sizeW downTo widthNum) {
+            if (count > height * width) break
+            matrix[sizeH, i] = num
             count++
         }
         sizeH--
-        for (l in sizeH - 1 downTo heightNum) {
-            if (count > height * width)
-                matrix[heightNum, l] = num
+        for (i in sizeH downTo heightNum) {
+            if (count > height * width) break
+            matrix[i, widthNum] = num
             count++
         }
         num++
@@ -161,44 +163,7 @@ fun generateRectangles(height: Int, width: Int): Matrix<Int> {
  * 10 13 16 18
  * 14 17 19 20
  */
-fun generateSnake(height: Int, width: Int): Matrix<Int> {
-    val matrix = createMatrix(height, width, 1)
-    var num = 0
-    var count = 1
-    var sizeH = height
-    var heightNum = 0
-    var sizeW = width
-    var widthNum = 0
-    while (num != width) {
-        for (i in widthNum until sizeW) {
-            for (j in heightNum until sizeH) {
-                var numI = sizeW
-                while (numI != 1) {
-                    matrix[heightNum, i] = count
-                    numI--
-                    count++
-                }
-            }
-        }
-        num++
-    }
-    heightNum++
-    num = 0
-    while (num != height) {
-        for (i in sizeW - 1 downTo widthNum) {
-            for (j in heightNum until sizeH) {
-                var numJ = heightNum
-                while (numJ != height) {
-                    matrix[widthNum, i] = count
-                    numJ++
-                    count++
-                }
-            }
-        }
-        num++
-    }
-    return matrix
-}
+fun generateSnake(height: Int, width: Int): Matrix<Int> = TODO()
 
 /**
  * Средняя
@@ -212,7 +177,7 @@ fun generateSnake(height: Int, width: Int): Matrix<Int> {
  * 7 8 9      9 6 3
  */
 fun <E> rotate(matrix: Matrix<E>): Matrix<E> = if (matrix.height == matrix.width) transpose(matrix)
-         else throw  IllegalArgumentException()
+else throw  IllegalArgumentException()
 
 /**
  * Сложная
