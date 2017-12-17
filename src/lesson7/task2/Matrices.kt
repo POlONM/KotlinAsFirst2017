@@ -147,6 +147,7 @@ fun generateRectangles(height: Int, width: Int): Matrix<Int> {
         num++
         widthNum++
     }
+    if ((height == width) && (height % 2 == 1)) matrix[height / 2, width / 2] = height * width
     return matrix
 }
 
@@ -176,9 +177,7 @@ fun generateSnake(height: Int, width: Int): Matrix<Int> = TODO()
  * 4 5 6      8 5 2
  * 7 8 9      9 6 3
  */
-fun <E> rotate(matrix: Matrix<E>): Matrix<E> = if (matrix.height == matrix.width) transpose(matrix)
-else throw  IllegalArgumentException()
-
+fun <E> rotate(matrix: Matrix<E>): Matrix<E> = TODO()
 /**
  * Сложная
  *
