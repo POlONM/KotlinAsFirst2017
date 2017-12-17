@@ -147,7 +147,7 @@ fun generateRectangles(height: Int, width: Int): Matrix<Int> {
         num++
         widthNum++
     }
-    if ((height == width) && (height % 2 == 1)) matrix[height / 2, width / 2] = height * width
+    if ((height == width) && (height % 2 == 1)) matrix[height / 2, width / 2] = num
     return matrix
 }
 
