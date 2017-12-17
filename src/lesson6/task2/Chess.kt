@@ -214,11 +214,13 @@ fun kingMoveNumber(start: Square, end: Square): Int {
             if (startCol < end.column) {
                 points++
                 startCol++
-                if (startRow != end.row) startRow++
+                if (startRow != end.row && startRow < end.row) startRow++
+                else if (startRow != end.row && startRow > end.row) startRow--
             } else {
                 points++
                 startCol--
-                if (startRow != end.row) startRow--
+                if (startRow != end.row && startRow < end.row) startRow++
+                else if (startRow != end.row && startRow > end.row) startRow--
             }
         }
         if (startCol == end.column && startRow != end.row) {
